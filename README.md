@@ -1,6 +1,6 @@
 # Impossibl Protocol
 
-A tournament protocol built on Worldchain, enabling users to create and participate in competitive tournaments with flexible prize distribution mechanisms.
+A tournament protocol built on Worldchain and Celo, enabling users to create and participate in competitive tournaments with flexible prize distribution mechanisms.
 
 ## Overview
 
@@ -27,7 +27,7 @@ The main contract that manages all tournament operations. Key features:
 
 ## Key Features
 
-- **Worldchain Deployment**: Native deployment on Worldchain network (Chain ID: 480)
+- **Multi-Chain Deployment**: Native deployment on both Worldchain (Chain ID: 480) and Celo (Chain ID: 42220) networks
 
 - **OpenZeppelin Integration**: Built on battle-tested OpenZeppelin contracts for security and reliability
 
@@ -35,13 +35,35 @@ The main contract that manages all tournament operations. Key features:
 
 - **Multi-Token Support**: Accepts both native ETH and any ERC20 token for buy-ins and prizes
 
-- **Gas Efficient**: Optimized for cost-effective operations on Worldchain
+- **Gas Efficient**: Optimized for cost-effective operations on both networks
 
 ## Contract Addresses
 
 ### Worldchain Mainnet
 
 - **ImpossiblProtocol**: `0x20c3adEFd4E604fdA12297a05B6099546677e4FB`
+
+### Celo Mainnet
+
+- **ImpossiblProtocol**: `0xbA75a319e118da7C95f57E35B926107253150332`
+
+## Celo ETHGlobal Buenos Aires Submission
+
+### Celo Integration
+
+Impossibl Protocol is deployed on Celo and leverages Celo's low-cost, fast finality blockchain infrastructure for efficient tournament operations. The protocol supports both native CELO and ERC20 tokens (including Celo's stablecoins like cUSD and cEUR) for tournament buy-ins and prize distributions. All tournament operations utilize Celo's gas-efficient network, making it accessible for users worldwide to participate in competitive tournaments.
+
+### Project Description
+
+Impossibl Protocol is a decentralized tournament platform that enables users to create and participate in competitive tournaments with flexible prize distribution mechanisms. The protocol supports two tournament types: Group tournaments with a single winner and automatic prize distribution, and Global tournaments that use Merkle proofs to enable multiple winners with verifiable, decentralized prize claims. Participants can join tournaments using either native CELO or any ERC20 token, making it accessible and flexible for various use cases.
+
+### Team
+
+The team is made by:
+
+- Frank: product and fullstack developer. Worked on contracts, design and webapp developement. X: @frankc_eth, Farcaster:@frankk
+- Bianc8: fullstack developer. Worked on backend and webapp developement. X: @bianc8_eth, Farcaster: @bianc8
+- Caso: fullstack developer. Worked on backend developement. Farcaster: @0xcaso
 
 ## Development
 
@@ -76,10 +98,13 @@ forge snapshot
 
 ### Deploy
 
-Deploy the ImpossiblProtocol contract to Worldchain:
+Deploy the ImpossiblProtocol contract to Worldchain or Celo:
+
+**Deploy to Worldchain:**
 
 ```bash
 export PRIVATE_KEY=your_private_key_here
+export DEPLOY_CHAIN=worldchain
 export EXPLORER_SCAN=https://worldscan.io  # Optional
 
 forge script script/DeployImpossibl.s.sol:DeployImpossibl \
@@ -89,7 +114,21 @@ forge script script/DeployImpossibl.s.sol:DeployImpossibl \
   -vvvv
 ```
 
-The deployment script is configured to use the public Worldchain RPC endpoint (hardcoded in `foundry.toml`). The `--rpc-url worldchain` flag uses this pre-configured endpoint.
+**Deploy to Celo:**
+
+```bash
+export PRIVATE_KEY=your_private_key_here
+export DEPLOY_CHAIN=celo
+export EXPLORER_SCAN=https://celoscan.io  # Optional
+
+forge script script/DeployImpossibl.s.sol:DeployImpossibl \
+  --rpc-url celo \
+  --broadcast \
+  --verify \
+  -vvvv
+```
+
+The deployment script supports both networks. RPC endpoints are hardcoded in `foundry.toml` as public endpoints. Set the `DEPLOY_CHAIN` environment variable to specify the target chain, and use the corresponding `--rpc-url` flag.
 
 ### Generate ABI
 
